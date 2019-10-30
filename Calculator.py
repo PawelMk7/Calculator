@@ -10,8 +10,20 @@ root.geometry('336x350')
 root.resizable(0,0)
 root.config(bg='white')
 
-def number_creator(num):
+
+def num_onclick(num):
+	global query
 	query += num
+	print(query)
+
+def dot_onclick():
+	global query
+	if query.find('.') == -1: 
+		query += '.'
+		print(query)
+	else: 
+		pass
+
 
 def addition():
 	pass
@@ -33,7 +45,7 @@ class NumberButton(Button):
 
 	button_font = font.Font(family='helvetica', size=25)
 
-	def __init__(self, master, text, command, *args, **kwargs):
+	def __init__(self, master, text, num, *args, **kwargs):
 		Button.__init__(self, master, *args, **kwargs)
 		self.master = master
 		self['height'] = 1
@@ -43,7 +55,7 @@ class NumberButton(Button):
 		self['bd'] = 1
 		self['font'] = NumberButton.button_font
 		self['fg'] = '#404040'
-		self['command'] = command
+		self['command'] = lambda: num_onclick(num)
 
 
 class OperationButton(Button):
@@ -70,7 +82,7 @@ placeholder.grid(row=5, column=0)
 b0 = NumberButton(root, 0, '0')
 b0.grid(row=5, column=1)
 
-bdot = OperationButton(root, '.', '.')
+bdot = OperationButton(root, '.', dot_onclick)
 bdot.grid(row=5, column=2)
 
 bresult = OperationButton(root, '=', calculate_result)
